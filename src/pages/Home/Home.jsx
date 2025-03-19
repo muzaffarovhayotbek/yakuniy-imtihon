@@ -1,6 +1,6 @@
 import React from 'react';
 import search from '../../assets/search-svgrepo-com.svg';
-
+import { FaSearch } from 'react-icons/fa';
 function Home() {
   return (
     <div className="container mx-auto my-5">
@@ -12,7 +12,7 @@ function Home() {
             name="search"
             className="w-full pl-4 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
-          <img src={search} alt="" width={16} className="absolute right-3" />
+          <FaSearch className="absolute right-3 h-4 w-4 opacity-70" />
         </label>
         <button className="p-[16px] bg-blue-400 text-[14px] rounded-md hover:bg-blue-500 transition">
           Search
