@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../assets/react.svg';
+
 function MainLayout({ children }) {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <header className="mt-[25px]">
         <div className="container mx-auto flex items-center justify-between">
-          <div className=" flex items-center">
-            <Link className=" flex items-center gap-[12px] text-[24px]" to="/">
-              <img src={icon} alt="" /> SuRaT
+          <div className="flex items-center">
+            <Link className="flex items-center gap-[12px] text-[24px]" to="/">
+              <img src={icon} alt="icon" /> SuRaT
             </Link>
           </div>
           <div className="header-nav">

@@ -2,8 +2,8 @@ import React from 'react';
 import profile from '../../assets/profile-DM-wpHcR.jpg';
 function About() {
   return (
-    <div>
-      <div className="container mx-auto">
+    <div className='min-h-screen bg-base-100 py-12'>
+      <div className="container mx-auto flex flex-col items-center">
         <h1 className="text-4xl font-bold mb-6 text-center">About Me</h1>
         <div className="avatar mb-8">
           <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -34,7 +34,7 @@ function About() {
             <div className="badge badge-primary">JavaScript</div>
             <div className="badge badge-primary">React</div>
             <div className="badge badge-primary">TailwindCSS</div>
-            <div className="badge badge-primary">Git</div>
+            <div className="badge badge-primary ">Git</div>
           </div>
         </div>
       </div>
