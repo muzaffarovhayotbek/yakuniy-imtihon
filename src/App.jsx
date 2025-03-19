@@ -6,6 +6,7 @@ import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Error from './pages/Error/Error';
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
           }
         ></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path='/register' element ={<Register/>}></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path='*' element = {<MainLayout><Error/></MainLayout>}></Route>
       </Routes>
     </div>
   );
