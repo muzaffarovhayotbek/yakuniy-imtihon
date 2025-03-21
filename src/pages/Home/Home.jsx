@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import ImageContainer from '../../components/ImageContainer';
 import { useFetch } from '../../hooks/useFetch';
-import { useActionData } from 'react-router-dom';
+import { useActionData, useNavigate } from 'react-router-dom';
 
-export const action = async ({ req }) => {
-  let Data = await req.Data();
-  let search = Data.get('search');
-  return search;
-};
 function Home() {
   const [img, setImg] = useState([]);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+
   const { data, isPending, error } = useFetch(
-    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=cars&page=1'
+    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=arts&page=10'
   );
   console.log(data);
 
@@ -29,6 +26,9 @@ function Home() {
   if (error) {
     return <h1>Error: {error}</h1>;
   }
+  const handleRedirect = (id) => {
+    navigate(`/imageinfo/${id}`);
+  };
 
   return (
     <div className="container mx-auto my-5">
@@ -46,8 +46,20 @@ function Home() {
           Search
         </button>
       </form>
-      <div className="my-10">
-        {img.length > 0 && <ImageContainer images={img} />}
+      <div className="my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {img.map((image) => (
+          <div
+            onClick={() => handleRedirect(image.id)}
+            key={image.id}
+            className="overflow-hidden rounded-lg shadow-md"
+          >
+            <img
+              src={image.urls.small}
+              alt={image.alt_description || 'Unsplash Image'}
+              className="w-full h-48 object-cover cursor-pointer"
+            />
+          </div>
+        ))}
       </div>
       <div>
         <button className="bg-gray-500 text-white py-2 px-4 rounded-full w-full cursor-pointer">

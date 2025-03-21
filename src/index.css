@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+h1{
+  background-color: rgb(0.43, 0.16, 282);
+}
 /* 
 *,
 *::after,

@@ -1,10 +1,20 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../assets/react.svg';
+import { MdOutlineDarkMode } from 'react-icons/md';
+import { MdDownload } from 'react-icons/md';
+import { IoSunny } from 'react-icons/io5';
+import useDarkModeStore from '../store/useDarkMore';
 
 function MainLayout({ children }) {
+  const { theme, toggle } = useDarkModeStore();
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div
+      className={`flex flex-col min-h-screen ${
+        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
+      }`}
+    >
       <header className="mt-[25px]">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
@@ -25,7 +35,16 @@ function MainLayout({ children }) {
               </li>
             </ul>
           </div>
-          <div className="header-btn"></div>
+          <div className="flex items-center gap-4 cursor-poi">
+            <button className="cursor-pointer" onClick={toggle}>
+              {theme === 'dark' ? (
+                <IoSunny className="text-yellow-500 w-6 h-6" />
+              ) : (
+                <MdOutlineDarkMode className="text-gray-800 w-6 h-6" />
+              )}
+            </button>
+  <NavLink to='/download'><MdDownload/></NavLink>
+          </div>
         </div>
       </header>
       <main className="flex-grow">{children}</main>
