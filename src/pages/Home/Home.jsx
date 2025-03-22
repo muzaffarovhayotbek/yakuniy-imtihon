@@ -9,7 +9,7 @@ function Home() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const { data, isPending, error } = useFetch(
-    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=city&page=5'
+    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=cars&page=30'
   );
   console.log(data);
 
@@ -20,11 +20,11 @@ function Home() {
   }, [data]);
 
   if (isPending) {
-    return <h1>Loading...</h1>;
+    return <h1 className="text-center text-2xl">Loading...</h1>;
   }
 
   if (error) {
-    return <h1>Error: {error}</h1>;
+    return <h1 className="text-center">Error: {error}</h1>;
   }
   const handleRedirect = (id) => {
     navigate(`/imageinfo/${id}`);

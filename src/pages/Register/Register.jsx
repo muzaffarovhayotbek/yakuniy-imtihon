@@ -4,12 +4,14 @@ import { MdOutlineMail } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { backend } from '../../axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toast';
 function Register() {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+
   function validate() {
     if (user.length < 6) {
       alert('Username eng kamida 6 ta harfdan iborat bo‘lishi kerak');
@@ -53,16 +55,17 @@ function Register() {
       })
       .then((response) => {
         if (response.status === 200) {
-          alert('Ro`yxatdan o`tish muvaffaqiyatli');
+          toast.success('Royxatdan otish muvaffaqiyatli');
           navigate('/login');
         }
       })
       .catch((error) => {
         const message =
           error.response?.data.message || 'Server bilan muammo mavjud';
-        alert(message);
+        toast.error(message);
       });
   }
+
   return (
     <div className="container mx-auto m-auto">
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -127,10 +130,15 @@ function Register() {
           Google <FcGoogle />
         </button>
       </div>
-    <div className='text-center flex items-center gap-4 justify-center mt-4'>
-      <p className='mt-2 text-sm text-gray-600'>Already have an account?</p>
-      <a className='font-medium text-indigo-600 hover:text-indigo-500' href="/login">Sign in</a>
-    </div>
+      <div className="text-center flex items-center gap-4 justify-center mt-4">
+        <p className="mt-2 text-sm text-gray-600">Already have an account?</p>
+        <a
+          className="font-medium text-indigo-600 hover:text-indigo-500"
+          href="/login"
+        >
+          Sign in
+        </a>
+      </div>
     </div>
   );
 }

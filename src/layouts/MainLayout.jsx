@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import icon from '../assets/react.svg';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import { MdDownload } from 'react-icons/md';
 import { IoSunny } from 'react-icons/io5';
 import useDarkModeStore from '../store/useDarkMore';
-
-function MainLayout({ children }) {
+import { GrLike } from 'react-icons/gr';
+function MainLayout() {
   const { theme, toggle } = useDarkModeStore();
 
   return (
@@ -35,7 +35,7 @@ function MainLayout({ children }) {
               </li>
             </ul>
           </div>
-          <div className="flex items-center gap-4 cursor-poi">
+          <div className="flex items-center gap-4 cursor-pointer">
             <button className="cursor-pointer" onClick={toggle}>
               {theme === 'dark' ? (
                 <IoSunny className="text-yellow-500 w-6 h-6" />
@@ -43,11 +43,18 @@ function MainLayout({ children }) {
                 <MdOutlineDarkMode className="text-gray-800 w-6 h-6" />
               )}
             </button>
-  <NavLink to='/download'><MdDownload/></NavLink>
+            <NavLink to="/download">
+              <MdDownload />
+            </NavLink>
+            <NavLink to="/likedImages">
+              <GrLike />
+            </NavLink>
           </div>
         </div>
       </header>
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow">
+        <Outlet />
+      </main>
       <footer className="bg-gray-800 p-4 text-white">
         <div className="text-center">
           <p>© 2024 Your Company. All rights reserved.</p>
