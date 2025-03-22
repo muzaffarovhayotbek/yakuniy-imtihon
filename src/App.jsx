@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
@@ -9,8 +9,15 @@ import Register from './pages/Register/Register';
 import Error from './pages/Error/Error';
 import Imageinfo from './pages/Imageinfo/Imageinfo';
 import Download from './pages/Download/Download';
+import Profile from './pages/Profile/Profile';
 
 function App() {
+  // const [token, setToken] = useState(localStorage.getItem('token'));
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!token && window.location.pathname !== '/register') navigate('/login');
+  // }, [token, navigate]);
   return (
     <div>
       <Routes>
@@ -61,6 +68,14 @@ function App() {
           element={
             <MainLayout>
               <Download />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <MainLayout>
+              <Profile />
             </MainLayout>
           }
         ></Route>

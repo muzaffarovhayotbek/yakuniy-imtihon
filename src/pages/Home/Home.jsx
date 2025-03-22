@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useFetch } from '../../hooks/useFetch';
 import { useActionData, useNavigate } from 'react-router-dom';
-
+import { IoMdDownload } from 'react-icons/io';
+import { CiHeart } from 'react-icons/ci';
 function Home() {
   const [img, setImg] = useState([]);
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
-
   const { data, isPending, error } = useFetch(
-    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=arts&page=10'
+    'https://api.unsplash.com/search/photos?client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns&query=city&page=5'
   );
   console.log(data);
 
@@ -30,8 +30,11 @@ function Home() {
     navigate(`/imageinfo/${id}`);
   };
 
+  function handleDownload() {
+    navigate('/download');
+  }
   return (
-    <div className="container mx-auto my-5">
+    <div className="container mx-auto my-5 pl-10 pr-10">
       <form className="mx-auto flex w-full max-w-96 items-center justify-center gap-3 px-6">
         <label className="relative flex w-full items-center">
           <input
@@ -42,7 +45,7 @@ function Home() {
           />
           <FaSearch className="absolute right-3 h-4 w-4 opacity-70" />
         </label>
-        <button className="p-[16px] bg-blue-400 text-[14px] rounded-md hover:bg-blue-500 transition">
+        <button className="p-[16px] bg-blue-400 text-[14px] rounded-md hover:bg-blue-500 transition cursor-pointer">
           Search
         </button>
       </form>
@@ -51,13 +54,20 @@ function Home() {
           <div
             onClick={() => handleRedirect(image.id)}
             key={image.id}
-            className="overflow-hidden rounded-lg shadow-md"
+            className="overflow-hidden rounded-lg  relative"
           >
             <img
-              src={image.urls.small}
+              src={image.urls.regular}
               alt={image.alt_description || 'Unsplash Image'}
-              className="w-full h-48 object-cover cursor-pointer"
+              className="w-full h-48 object-cover cursor-pointer rounded-lg"
             />
+            <button>
+              <CiHeart className="absolute top-2.5  right-2.5 w-6 h-6 cursor-pointer opacity-70" />
+              <IoMdDownload
+                onClick={handleDownload}
+                className="absolute bottom-8 right-2.5 w-6 h-6 cursor-pointer"
+              />
+            </button>
           </div>
         ))}
       </div>

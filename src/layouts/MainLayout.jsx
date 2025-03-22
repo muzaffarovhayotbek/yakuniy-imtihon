@@ -15,7 +15,7 @@ function MainLayout({ children }) {
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
       }`}
     >
-      <header className="mt-[25px]">
+      <header className="mt-[25px] pl-10 pr-10">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Link className="flex items-center gap-[12px] text-[24px]" to="/">

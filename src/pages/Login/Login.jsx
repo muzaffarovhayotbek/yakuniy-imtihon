@@ -1,18 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { CgMail } from 'react-icons/cg';
 import google from '../../assets/google.svg';
 import { FaKey } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { backend } from '../../axios';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const user = { email, password };
+    // backend
+    //   .post('https://auth-rg69.onrender.com/api/auth/signin', user, {
+    //     headers: { 'Content-Type': 'application/json' },
+    //   })
+    //   .then((response) => {
+    //     if(response.status===200){
+    //       // localStorage.setItem('user', JSON.stringify(response.data));
+    //       // localStorage.setItem('token', response.data.accessToken);
+    //       navigate('/');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     const message = error.response?.data?.message || 'Noma`lum xatolik';
+    //     if(error.response?.status===404 || error.response?.status===401){
+    //       alert(message)
+    //     }else{
+    //       alert('Tizimda xatolik yuz berdi. Qaytadan urinib ko`ring!')
+    //     }
+    //   });
+  }
   return (
     <div className="container mx-auto w-full max-w-md space-y-8">
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Sign in to your account
       </h2>
-      <form className="flex flex-col gap-3 p-4 w-full">
+      <form className="flex flex-col gap-3 p-4 w-full" >
         <label className="relative w-full my-2">
           <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
             className="input input-sm input-bordered w-full pl-3 pr-3 py-2 rotate-md"
@@ -23,6 +54,8 @@ function Login() {
 
         <label className="relative w-full my-2">
           <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
             className="input input-sm input-bordered w-full pl-3 pr-3 py-2"
@@ -32,8 +65,10 @@ function Login() {
         </label>
 
         <div className="flex justify-between md:flex-row mt-8 gap-3">
-          <button className=" cursor-pointer bg-[rgb(110,41,282)] text-white text-sm md:text-base px-3 py-1 md:px-4 md:py-2 rounded hover:scale-105 transition-transform">
-            Sign in
+          <button onClick={handleLogin}
+            className=" cursor-pointer bg-[#6e29b2] text-white text-sm md:text-base px-3 py-1 md:px-4 md:py-2 rounded hover:scale-105 transition-transform"
+          >
+            Sign in 
           </button>
 
           <button className="cursor-pointer bg-[rgb(110,41,282)] text-white text-sm md:text-base px-3 py-1 md:px-4 md:py-2 rounded hover:scale-105 transition-transform flex items-center gap-2">
