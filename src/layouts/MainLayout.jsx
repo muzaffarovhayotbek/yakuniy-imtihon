@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import icon from "../assets/react.svg";
-import { MdOutlineDarkMode, MdDownload } from "react-icons/md";
-import { IoSunny } from "react-icons/io5";
-import useDarkModeStore from "../store/useDarkMore";
-import { GrLike } from "react-icons/gr";
-import { FaUnsplash } from "react-icons/fa";
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import icon from '../assets/react.svg';
+import { MdOutlineDarkMode, MdDownload } from 'react-icons/md';
+import { IoSunny } from 'react-icons/io5';
+import useDarkModeStore from '../store/useDarkMore';
+import { GrLike } from 'react-icons/gr';
+import { FaUnsplash } from 'react-icons/fa';
 function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,20 +17,23 @@ function MainLayout({ children }) {
         setIsMenuOpen(false);
       }
     };
-    document.addEventListener("click", closeMenu);
-    return () => document.removeEventListener("click", closeMenu);
+    document.addEventListener('click', closeMenu);
+    return () => document.removeEventListener('click', closeMenu);
   }, []);
 
   return (
     <div
       className={`flex flex-col min-h-screen ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
       }`}
     >
       <header className="mt-6 px-10">
         <div className="container mx-auto flex items-center justify-between">
-          <Link className="flex items-center gap-3 text-xl font-semibold" to="/">
-  <FaUnsplash className="w-[32px] h-[32px]"/> SuRaT
+          <Link
+            className="flex items-center gap-3 text-xl font-semibold"
+            to="/"
+          >
+            <FaUnsplash className="w-[32px] h-[32px]" /> SuRaT
           </Link>
 
           <nav>
@@ -55,7 +58,7 @@ function MainLayout({ children }) {
 
           <div className="flex items-center gap-5">
             <button className="cursor-pointer" onClick={toggle}>
-              {theme === "dark" ? (
+              {theme === 'dark' ? (
                 <IoSunny className="text-yellow-500 w-6 h-6" />
               ) : (
                 <MdOutlineDarkMode className="text-gray-800 w-6 h-6" />
@@ -86,7 +89,7 @@ function MainLayout({ children }) {
                   <li className="p-2 font-bold">Hayotbek</li>
                   <li>
                     <NavLink
-                      className="flex items-center justify-between block p-2 rounded hover:bg-gray-200"
+                      className="flex items-center justify-between  p-2 rounded hover:bg-gray-200"
                       to="/profile"
                     >
                       Profile
