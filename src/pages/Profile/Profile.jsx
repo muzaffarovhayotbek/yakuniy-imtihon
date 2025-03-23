@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 function Profile() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [follow, setFollow] = useState('follow');

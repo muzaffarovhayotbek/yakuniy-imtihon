@@ -107,7 +107,8 @@ function Home() {
                     {isLiked ? <FaHeart /> : <FaRegHeart />}
                   </button>
                   <a
-                    download={image.download}
+                  
+                    download={image.urls.full}
                     href="/download"
                     onClick={(e) => {
                       e.stopPropagation();

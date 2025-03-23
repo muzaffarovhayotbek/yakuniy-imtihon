@@ -14,7 +14,7 @@ function ImageContainer({ images }) {
       <Masonry gutter="10px">
         {images.map((image) => (
           <div key={image.id} onClick={() => handleRedirect(image.id)}>
-            <img src={image.urls.regular} alt={image.alt_description || 'Image'} />
+            <img className='w-full h-full object-cover' src={image.urls.regular} alt={image.alt_description || 'Image'} />
           </div>
         ))}
       </Masonry>
