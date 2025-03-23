@@ -1,71 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
+import React, { useState } from 'react';
 import { CgMail } from 'react-icons/cg';
 import google from '../../assets/google.svg';
 import { FaKey } from 'react-icons/fa';
-import { useActionData, useNavigate } from 'react-router-dom';
-import Modal from '../../components/Modal';
-import { backend } from '../../axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toast';
 
-export const action = async ({ request }) => {
-  const form = await request.formData();
-  const email = form.get('email');
-  const password = form.get('password');
-  const emailForReset = form.get('emai_for_reset');
-
-  if (emailForReset?.trim()) {
-    return { emailForReset };
+function validate(email, password) {
+  if (email.length < 6 || !email.endsWith('@gmail.com')) {
+    toast.error('Email must be at least 6 characters and end with @gmail.com');
+    return false;
   }
-  return {
-    email,
-    password,
-  };
-};
-function Login() {
-  const inputData = useActionData();
-  const { registerWithGoogle } = useRegister();
-  const { loginWithEmail } = useLogin();
+  if (password.length < 6) {
+    toast.error('Password must be at least 6 characters long');
+    return false;
+  }
+  return true;
+}
 
-  useEffect(() => {
-    if (inputData?.email && inputData?.password) {
-      loginWithEmail(inputData.email, inputData.password);
-    }
-  }, [inputData]);
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
-    const user = { email, password };
-    backend
-      .post('https://auth-rg69.onrender.com/api/auth/signin', user, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          // localStorage.setItem('user', JSON.stringify(response.data));
-          // localStorage.setItem('token', response.data.accessToken);
-          navigate('/');
-        }
-      })
-      .catch((error) => {
-        const message = error.response?.data?.message || 'Noma`lum xatolik';
-        if (error.response?.status === 404 || error.response?.status === 401) {
-          alert(message);
-        } else {
-          alert('Tizimda xatolik yuz berdi. Qaytadan urinib ko`ring!');
-        }
-      });
+    if (!validate(email, password)) return;
+    navigate('/'); // Redirect to homepage after successful login.
+
+    // You should now make your API call here for a real login.
+    // For example:
+    // axios.post('/api/auth/signin', { email, password })
+    //   .then(response => {
+    //     localStorage.setItem('user', JSON.stringify(response.data));
+    //     localStorage.setItem('token', response.data.accessToken);
+    //     navigate('/');
+    //   })
+    //   .catch(error => {
+    //     toast.error(error.response?.data?.message || 'Login failed');
+    //   });
   }
+
   return (
     <>
-      <Modal />
       <div className="container mx-auto w-full max-w-md space-y-8">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
-        <form className="flex flex-col gap-3 p-4 w-full">
+        <form className="flex flex-col gap-3 p-4 w-full" onSubmit={handleLogin}>
           <label className="relative w-full my-2">
             <input
               value={email}
@@ -92,7 +73,7 @@ function Login() {
 
           <div className="flex justify-between md:flex-row mt-8 gap-3">
             <button
-              onClick={handleLogin}
+              type="submit"
               className=" cursor-pointer bg-[#6e29b2] text-white text-sm md:text-base px-3 py-1 md:px-4 md:py-2 rounded hover:scale-105 transition-transform"
             >
               Sign in
@@ -110,7 +91,7 @@ function Login() {
               type="button"
               onClick={() => document.getElementById('my_modal_1').showModal()}
             >
-              Forget password ?{' '}
+              Forget password?
             </button>
           </div>
           <p className="mt-2 text-sm text-gray-600">Don't have an account? </p>

@@ -6,7 +6,7 @@ import { MdDownload } from 'react-icons/md';
 import { IoSunny } from 'react-icons/io5';
 import useDarkModeStore from '../store/useDarkMore';
 import { GrLike } from 'react-icons/gr';
-function MainLayout() {
+function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
 
   return (
@@ -44,17 +44,15 @@ function MainLayout() {
               )}
             </button>
             <NavLink to="/download">
-              <MdDownload />
+              <MdDownload className="w-6 h-6" />
             </NavLink>
             <NavLink to="/likedImages">
-              <GrLike />
+              <GrLike className="w-6 h-6" />
             </NavLink>
           </div>
         </div>
       </header>
-      <main className="flex-grow">
-        <Outlet />
-      </main>
+      <main className="flex-grow"> {children}</main>
       <footer className="bg-gray-800 p-4 text-white">
         <div className="text-center">
           <p>© 2024 Your Company. All rights reserved.</p>

@@ -4,7 +4,7 @@ import { MdOutlineMail } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { backend } from '../../axios';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toast';
+import toast from 'react-hot-toast';
 function Register() {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
@@ -39,6 +39,7 @@ function Register() {
   function handleAdd(e) {
     e.preventDefault();
     if (!validate()) return;
+    navigate('/login');
 
     const userData = {
       username: user,
@@ -47,23 +48,24 @@ function Register() {
     };
     console.log(userData);
 
-    backend
-      .post('auth/signup', userData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success('Royxatdan otish muvaffaqiyatli');
-          navigate('/login');
-        }
-      })
-      .catch((error) => {
-        const message =
-          error.response?.data.message || 'Server bilan muammo mavjud';
-        toast.error(message);
-      });
+    //   backend
+    //     .post('auth/signup', userData, {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.status === 200) {
+    //         aler;
+    //         navigate('/login');
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       const message =
+    //         error.response?.data.message || 'Server bilan muammo mavjud';
+    //       toast.error(message);
+    //     });
+    // }
   }
 
   return (
