@@ -8,26 +8,15 @@ import { useRegister } from '../../hooks/useRegister';
 import useDarkModeStore from '../../store/useDarkMore';
 import { MdOutlineDarkMode } from 'react-icons/md';
 
-export const action = async ({ request }) => {
-  const form = await request.formData();
-
-  const displayName = form.get('displayName');
-  const email = form.get('email');
-  const password = form.get('password');
-  const confirm_password = form.get('confirm_password');
-
-  return{
-    displayName,
-    email,
-    password,
-    confirm_password
-  }
-};
 function Register() {
   const { theme, toggle } = useDarkModeStore();
   const { registerWithGoogle } = useRegister();
-  const [user, setUser] = useState('');
   const navigate = useNavigate();
+
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   function validate() {
     if (user.length < 6) {
@@ -43,7 +32,7 @@ function Register() {
     }
 
     if (password.length < 8) {
-      alert('Parol kamida 8 ta raqam');
+      alert('Parol kamida 8 ta belgidan iborat bo‘lishi kerak');
       return false;
     }
 
@@ -57,7 +46,6 @@ function Register() {
   function handleAdd(e) {
     e.preventDefault();
     if (!validate()) return;
-    navigate('/login');
 
     const userData = {
       username: user,
@@ -65,13 +53,14 @@ function Register() {
       password,
     };
     console.log(userData);
+
+    navigate('/login');
   }
 
   return (
     <div
-      className={`flex flex-col min-h-screen ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
-      }`}
+      className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
+        }`}
     >
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600">
         <button className="cursor-pointer" onClick={toggle}>
