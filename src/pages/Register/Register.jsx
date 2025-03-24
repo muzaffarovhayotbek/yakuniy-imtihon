@@ -2,19 +2,31 @@ import React, { useState } from 'react';
 import { FaUser, FaKey } from 'react-icons/fa';
 import { MdOutlineMail } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
-import { IoSunny } from 'react-icons/io5'; 
+import { IoSunny } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../../hooks/useRegister';
 import useDarkModeStore from '../../store/useDarkMore';
 import { MdOutlineDarkMode } from 'react-icons/md';
 
+export const action = async ({ request }) => {
+  const form = await request.formData();
+
+  const displayName = form.get('displayName');
+  const email = form.get('email');
+  const password = form.get('password');
+  const confirm_password = form.get('confirm_password');
+
+  return{
+    displayName,
+    email,
+    password,
+    confirm_password
+  }
+};
 function Register() {
   const { theme, toggle } = useDarkModeStore();
   const { registerWithGoogle } = useRegister();
   const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   function validate() {
@@ -83,6 +95,7 @@ function Register() {
                 type="text"
                 placeholder="User"
                 required
+                name="displayName"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
@@ -94,6 +107,7 @@ function Register() {
                 type="text"
                 placeholder="Email"
                 required
+                name="email"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
@@ -105,6 +119,7 @@ function Register() {
                 type="password"
                 placeholder="Password"
                 required
+                name="password"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
@@ -116,6 +131,7 @@ function Register() {
                 type="password"
                 placeholder="Confirm Password"
                 required
+                name="confirm_password"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>

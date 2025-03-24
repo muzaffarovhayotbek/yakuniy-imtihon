@@ -14,6 +14,8 @@ export const useRegister = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
+                console.log(user);
+                
                 dispatch({ type: "LOGIN", payload: user });
                 toast.success("Welcome, " + user.displayName);
                 
