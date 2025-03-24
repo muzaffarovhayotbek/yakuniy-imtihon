@@ -3,13 +3,13 @@ import { Link, NavLink } from 'react-router-dom';
 import icon from '../assets/react.svg';
 import { MdOutlineDarkMode, MdDownload } from 'react-icons/md';
 import { IoSunny } from 'react-icons/io5';
-import useDarkModeStore from '../store/useDarkMore';
 import { GrLike } from 'react-icons/gr';
 import { FaUnsplash } from 'react-icons/fa';
 import { useGlobalContext } from '../context/GlobalContext';
+import useDarkModeStore from '../store/useDarkMore';
 function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
-  const {user }= useGlobalContext()
+  const { user } = useGlobalContext();
   return (
     <div
       className={`flex flex-col min-h-screen ${
@@ -62,14 +62,12 @@ function MainLayout({ children }) {
             </NavLink>
           </div>
 
-          <div className='flex'>
-           
-          <div className="avatar">
-  <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-  {/* <img className='rounded-full w-10 h-10 object-cover' src={user.photoURL} /> */}
-
-  </div>
-</div>
+          <div className="flex">
+            <div className="avatar">
+              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                {/* <img className='rounded-full w-10 h-10 object-cover' src={user.photoURL} /> */}
+              </div>
+            </div>
           </div>
         </div>
       </header>

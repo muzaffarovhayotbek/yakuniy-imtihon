@@ -25,7 +25,7 @@ function App() {
           index
           element={
             <MainLayout>
-              <Home></Home> 
+              <Home></Home>
             </MainLayout>
           }
         ></Route>
