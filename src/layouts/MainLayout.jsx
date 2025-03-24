@@ -6,21 +6,10 @@ import { IoSunny } from 'react-icons/io5';
 import useDarkModeStore from '../store/useDarkMore';
 import { GrLike } from 'react-icons/gr';
 import { FaUnsplash } from 'react-icons/fa';
+import { useGlobalContext } from '../context/GlobalContext';
 function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    const closeMenu = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener('click', closeMenu);
-    return () => document.removeEventListener('click', closeMenu);
-  }, []);
-
+  const {user }= useGlobalContext()
   return (
     <div
       className={`flex flex-col min-h-screen ${
@@ -71,52 +60,16 @@ function MainLayout({ children }) {
             <NavLink to="/likedImages">
               <GrLike className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
+          </div>
 
-            <div ref={menuRef} className="relative">
-              <div
-                className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-300 hover:border-gray-500"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                <img
-                  src="https://picsum.photos/id/237/200/200"
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <div className='flex'>
+           
+          <div className="avatar">
+  <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+  {/* <img className='rounded-full w-10 h-10 object-cover' src={user.photoURL} /> */}
 
-              {isMenuOpen && (
-                <ul className="absolute right-0 mt-3 w-52 rounded-lg shadow-lg bg-white text-black p-2 z-10">
-                  <li className="p-2 font-bold">Hayotbek</li>
-                  <li>
-                    <NavLink
-                      className="flex items-center justify-between  p-2 rounded hover:bg-gray-200"
-                      to="/profile"
-                    >
-                      Profile
-                      <span className="inline-block px-3 py-1 text-sm font-semibold text-white bg-blue-500 rounded-full">
-                        new
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className="block p-2 rounded hover:bg-gray-200"
-                      to="/settings"
-                    >
-                      Settings
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className="block p-2 rounded text-red-500 hover:bg-red-100"
-                      to="/logout"
-                    >
-                      Log out
-                    </NavLink>
-                  </li>
-                </ul>
-              )}
-            </div>
+  </div>
+</div>
           </div>
         </div>
       </header>

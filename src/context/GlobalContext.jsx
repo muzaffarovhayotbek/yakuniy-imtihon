@@ -1,40 +1,19 @@
-import { createContext, useEffect, useReducer } from 'react';
-import LikedImages from '../pages/LikedImages/LikedImages';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 
 export const GlobalContext = createContext();
 
 const dataFromLocalStorage = () => {
-  return (
-    JSON.parse(localStorage.getItem('my-splash-data')) || {
-      LikedImages: [],
-      downloadImage: [],
-    }
-  );
+  return JSON.parse(localStorage.getItem('my-splash-data')) || {};
 };
+
 const changeState = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case 'LOGIN':
-      return {
-        ...state,
-        user: payload,
-      };
+      return { ...state, user: payload };
     case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-      };
-    case 'LIKE':
-      return {
-        ...state,
-        LikedImages: [...state.LikedImages, payload],
-      };
-    case 'UNLIKE':
-      return {
-        ...state,
-        LikedImages: state.LikedImages.filter((image) => image.id !== payload),
-      };
+      return { ...state, user: null };
 
     default:
       return state;
@@ -43,7 +22,7 @@ const changeState = (state, action) => {
 
 export function GlobalContextProvider({ children }) {
   const [state, dispatch] = useReducer(changeState, {
-    user: false,
+    user: null,
     LikedImages: [],
     downloadImage: [],
   });
@@ -51,9 +30,14 @@ export function GlobalContextProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('my-splash-data', JSON.stringify(state));
   }, [state]);
+
   return (
     <GlobalContext.Provider value={{ ...state, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );
 }
+
+export const useGlobalContext = () => {
+  return useContext(GlobalContext);
+};

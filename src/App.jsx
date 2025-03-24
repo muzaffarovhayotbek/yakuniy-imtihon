@@ -12,13 +12,11 @@ import Download from './pages/Download/Download';
 import Profile from './pages/Profile/Profile';
 import { Toaster } from 'react-hot-toast';
 import LikedImages from './pages/LikedImages/LikedImages';
+import { useGlobalContext } from './context/GlobalContext';
 function App() {
-  // const [token, setToken] = useState(localStorage.getItem('token'));
+  const { user } = useGlobalContext;
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!token && window.location.pathname !== '/register') navigate('/login');
-  // }, [token, navigate]);
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
@@ -27,7 +25,7 @@ function App() {
           index
           element={
             <MainLayout>
-              <Home></Home>
+              <Home></Home> 
             </MainLayout>
           }
         ></Route>
@@ -81,7 +79,14 @@ function App() {
             </MainLayout>
           }
         ></Route>
-        <Route path='likedImages' element = {<MainLayout><LikedImages/></MainLayout>}></Route>
+        <Route
+          path="likedImages"
+          element={
+            <MainLayout>
+              <LikedImages />
+            </MainLayout>
+          }
+        ></Route>
       </Routes>
     </div>
   );

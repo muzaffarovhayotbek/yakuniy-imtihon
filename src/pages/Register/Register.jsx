@@ -5,7 +5,10 @@ import { FcGoogle } from 'react-icons/fc';
 import { backend } from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useRegister } from '../../hooks/useRegister';
+
 function Register() {
+  const { registerWithGoogle } = useRegister();
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,34 +50,15 @@ function Register() {
       password,
     };
     console.log(userData);
-
-    //   backend
-    //     .post('auth/signup', userData, {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         aler;
-    //         navigate('/login');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       const message =
-    //         error.response?.data.message || 'Server bilan muammo mavjud';
-    //       toast.error(message);
-    //     });
-    // }
   }
 
   return (
-    <div className="container mx-auto m-auto">
-      <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Create your account
-      </h2>
-      <form className="flex items-center justify-center mt-10">
-        <div className="flex flex-col gap-4 w-[448px]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          Create your account
+        </h2>
+        <form className="mt-6 flex flex-col gap-4">
           <label className="relative w-full">
             <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
@@ -83,7 +67,7 @@ function Register() {
               type="text"
               placeholder="User"
               required
-              className="input input-sm input-bordered w-full pl-3 p-4 rounded-md bg-black text-white"
+              className="input input-bordered w-full p-3 rounded-md border-gray-300"
             />
           </label>
           <label className="relative w-full">
@@ -94,7 +78,7 @@ function Register() {
               type="text"
               placeholder="Email"
               required
-              className="input input-sm input-bordered w-full pl-3 p-4 rounded-md bg-black text-white"
+              className="input input-bordered w-full p-3 rounded-md border-gray-300"
             />
           </label>
           <label className="relative w-full">
@@ -105,7 +89,7 @@ function Register() {
               type="password"
               placeholder="Password"
               required
-              className="input input-sm input-bordered w-full pl-3 p-4 rounded-md bg-black text-white"
+              className="input input-bordered w-full p-3 rounded-md border-gray-300"
             />
           </label>
           <label className="relative w-full">
@@ -116,30 +100,28 @@ function Register() {
               type="password"
               placeholder="Confirm Password"
               required
-              className="input input-sm input-bordered w-full pl-3 p-4 rounded-md bg-black text-white"
+              className="input input-bordered w-full p-3 rounded-md border-gray-300"
             />
           </label>
+          <button
+            onClick={handleAdd}
+            className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition"
+          >
+            Register
+          </button>
+          <button onClick={registerWithGoogle } className="flex items-center justify-center gap-2 bg-black text-white p-3 rounded-md hover:bg-gray-800 transition">
+            Google <FcGoogle />
+          </button>
+        </form>
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600">Already have an account?</p>
+          <a
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+            href="/login"
+          >
+            Sign in
+          </a>
         </div>
-      </form>
-      <div className="flex gap-5 md:flex-row justify-center mt-8">
-        <button
-          onClick={handleAdd}
-          className="text-[14px] cursor-pointer bg-blue-600 rounded-md p-4"
-        >
-          Register
-        </button>
-        <button className="flex items-center gap-1 bg-black text-white rounded-md p-4 cursor-pointer">
-          Google <FcGoogle />
-        </button>
-      </div>
-      <div className="text-center flex items-center gap-4 justify-center mt-4">
-        <p className="mt-2 text-sm text-gray-600">Already have an account?</p>
-        <a
-          className="font-medium text-indigo-600 hover:text-indigo-500"
-          href="/login"
-        >
-          Sign in
-        </a>
       </div>
     </div>
   );
