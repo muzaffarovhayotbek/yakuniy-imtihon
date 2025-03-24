@@ -60,7 +60,7 @@ function Header() {
               <GrLike className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
 
-            <div className="relative">
+            {/* <div className="relative">
               <div
                 className="cursor-pointer w-8   rounded-full border border-gray-300"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -78,9 +78,9 @@ function Header() {
                     alt="Default avatar"
                   />
                 )}
-              </div>
+              </div> */}
 
-              {isMenuOpen && (
+              {/* {isMenuOpen && (
                 <ul
                   className="absolute right-0 mt-2 w-52 rounded-md bg-white shadow-lg z-50 border border-gray-200 
                   transition-all duration-200 transform scale-95 opacity-100"
@@ -101,10 +101,9 @@ function Header() {
                     Logout
                   </li>
                 </ul>
-              )}
+              )} */}
             </div>
           </div>
-        </div>
       </header>
     </div>
   );

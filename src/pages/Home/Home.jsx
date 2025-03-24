@@ -19,7 +19,7 @@ function Home() {
   const fetchImages = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.unsplash.com/photos/random?count=30&client_id=NtkHPpB0p5hrN3gYQB6w-CLFQ8VD9BGTsbLdwanSrb8`
+        `https://api.unsplash.com/photos/random?count=30&client_id=GqdHvrWr1R2h7h1P0zfChSgcy2L-sPpnuQJXbm_n0Ns`
       );
       setAllImages((prev) => [...prev, ...data]);
     } catch (error) {
