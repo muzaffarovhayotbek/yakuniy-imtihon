@@ -8,7 +8,7 @@ import { toggleLike } from '../../store/likeSlice';
 import toast from 'react-hot-toast';
 import Search from '../../components/Search';
 import axios from 'axios';
-
+import { FaDownload } from 'react-icons/fa6';
 function Home() {
   const [allImages, setAllImages] = useState([]);
   const navigate = useNavigate();
@@ -101,15 +101,18 @@ function Home() {
                   >
                     {isLiked ? <FaHeart /> : <FaRegHeart />}
                   </button>
-                  <button
-                    className="absolute bottom-3 right-3 text-white bg-gray-800 p-1 rounded-full text-lg cursor-pointer w-7 h-7 opacity-70"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDownload(image.urls.full);
-                    }}
-                  >
-                    <IoMdDownload />
-                  </button>
+                  <span className="hover-icons absolute bottom-2 right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
+                    <a
+                      download
+                      href={
+                        image.links?.download
+                          ? image.links.download + '&force=true'
+                          : '#'
+                      }
+                    >
+                      <FaDownload className="text-white" />
+                    </a>
+                  </span>
                 </div>
               );
             })}

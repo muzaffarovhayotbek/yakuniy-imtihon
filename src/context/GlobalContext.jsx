@@ -1,9 +1,15 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
-export const GlobalContext = createContext();
+export const GlobalContext = createContext({});
 
 const dataFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem('my-splash-data')) || {};
+  return (
+    JSON.parse(localStorage.getItem('my-splash-data')) || {
+      user: null,
+      LikedImages: [],
+      downloadImage: [],
+    }
+  );
 };
 
 const changeState = (state, action) => {
@@ -14,18 +20,13 @@ const changeState = (state, action) => {
       return { ...state, user: payload };
     case 'LOGOUT':
       return { ...state, user: null };
-
     default:
       return state;
   }
 };
 
 export function GlobalContextProvider({ children }) {
-  const [state, dispatch] = useReducer(changeState, {
-    user: null,
-    LikedImages: [],
-    downloadImage: [],
-  });
+  const [state, dispatch] = useReducer(changeState, dataFromLocalStorage());
 
   useEffect(() => {
     localStorage.setItem('my-splash-data', JSON.stringify(state));
@@ -39,5 +40,11 @@ export function GlobalContextProvider({ children }) {
 }
 
 export const useGlobalContext = () => {
-  return useContext(GlobalContext);
+  const context = useContext(GlobalContext);
+  if (!context) {
+    throw new Error(
+      'useGlobalContext must be used within a GlobalContextProvider'
+    );
+  }
+  return context;
 };
