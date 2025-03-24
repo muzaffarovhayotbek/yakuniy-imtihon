@@ -1,15 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import icon from '../assets/react.svg';
 import { MdOutlineDarkMode, MdDownload } from 'react-icons/md';
 import { IoSunny } from 'react-icons/io5';
 import { GrLike } from 'react-icons/gr';
 import { FaUnsplash } from 'react-icons/fa';
 import { useGlobalContext } from '../context/GlobalContext';
 import useDarkModeStore from '../store/useDarkMore';
+
 function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
   const { user } = useGlobalContext();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div
       className={`flex flex-col min-h-screen ${
@@ -22,7 +24,8 @@ function MainLayout({ children }) {
             className="flex items-center gap-3 text-xl font-semibold"
             to="/"
           >
-            <FaUnsplash className="w-[32px] h-[32px]" /> SuRaT
+            <FaUnsplash className="w-8 h-8" />
+            <span>SuRaT</span>
           </Link>
 
           <nav>
@@ -57,16 +60,39 @@ function MainLayout({ children }) {
             <NavLink to="/download">
               <MdDownload className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
+
             <NavLink to="/likedImages">
               <GrLike className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
-          </div>
 
-          <div className="flex">
-            <div className="avatar">
-              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                {/* <img className='rounded-full w-10 h-10 object-cover' src={user.photoURL} /> */}
+            <div className="relative">
+              <div
+                className="cursor-pointer w-10 rounded-full overflow-hidden border border-gray-300"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {user && user.photoURL ? (
+                  <img src={user.photoURL} alt={user.displayName || 'User'} />
+                ) : (
+                  <img className='rounded-full'  src="/default-avatar.png" alt="Default avatar" />
+                )}
               </div>
+
+              {isMenuOpen && (
+                <ul
+                  className="absolute right-0 mt-2 w-52 rounded-md bg-white shadow-lg z-50 border border-gray-200 
+                  transition-all duration-200 transform scale-95 opacity-100"
+                >
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    <a href="/profile">Profile</a>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Settings
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
+                    Logout
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </div>
