@@ -14,7 +14,7 @@ import { Toaster } from 'react-hot-toast';
 import LikedImages from './pages/LikedImages/LikedImages';
 import { useGlobalContext } from './context/GlobalContext';
 function App() {
-  const { user } = useGlobalContext;
+  const {user} = useGlobalContext()
   const navigate = useNavigate();
 
   return (

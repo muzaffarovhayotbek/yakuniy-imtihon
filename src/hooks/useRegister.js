@@ -1,28 +1,30 @@
-import toast from 'react-hot-toast';
-import { auth } from '../firebase/firabageConfig';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from "../firebase/firabageConfig";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useGlobalContext } from '../context/GlobalContext';
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const useRegister = () => {
-  const { dispatch } = useGlobalContext();
+    const { dispatch } = useGlobalContext();
+    const navigate = useNavigate(); 
 
-  const registerWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+    const registerWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
 
-        dispatch({ type: 'LOGIN', payload: user });
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user;
+                dispatch({ type: "LOGIN", payload: user });
+                toast.success("Welcome, " + user.displayName);
+                
+                navigate("/"); 
+            })
+            .catch((error) => {
+                console.error("Error during Google Sign-In:", error);
+                toast.error(error.message);
+            });
+    };
 
-        toast.success('Welcome ' + user.displayName);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        toast.error(errorMessage);
-      });
-  };
-
-  return { registerWithGoogle };
+    return { registerWithGoogle };
 };
+
