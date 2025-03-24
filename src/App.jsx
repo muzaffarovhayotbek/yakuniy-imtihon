@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home/Home';
@@ -13,9 +13,16 @@ import Profile from './pages/Profile/Profile';
 import { Toaster } from 'react-hot-toast';
 import LikedImages from './pages/LikedImages/LikedImages';
 import { useGlobalContext } from './context/GlobalContext';
+
 function App() {
-  const {user} = useGlobalContext()
+  const { user } = useGlobalContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   return (
     <div>
@@ -25,7 +32,7 @@ function App() {
           index
           element={
             <MainLayout>
-              <Home></Home>
+              <Home />
             </MainLayout>
           }
         ></Route>
@@ -33,7 +40,7 @@ function App() {
           path="/about"
           element={
             <MainLayout>
-              <About></About>
+              <About />
             </MainLayout>
           }
         ></Route>
@@ -41,7 +48,7 @@ function App() {
           path="/contact"
           element={
             <MainLayout>
-              <Contact></Contact>
+              <Contact />
             </MainLayout>
           }
         ></Route>
@@ -80,7 +87,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="likedImages"
+          path="/likedImages"
           element={
             <MainLayout>
               <LikedImages />
