@@ -6,6 +6,8 @@ import { FaUnsplash } from 'react-icons/fa';
 import { useGlobalContext } from '../context/GlobalContext';
 import useDarkModeStore from '../store/useDarkMore';
 import { Link, NavLink } from 'react-router-dom';
+import { FiSun } from "react-icons/fi";
+import { MdDarkMode } from "react-icons/md";
 
 function Header() {
   const { theme, toggle } = useDarkModeStore();
@@ -44,11 +46,13 @@ function Header() {
 
           <div className="flex items-center gap-5">
             <button className="cursor-pointer" onClick={toggle}>
-              {theme === 'dark' ? (
-                <IoSunny className="text-yellow-500 w-6 h-6" />
-              ) : (
-                <MdOutlineDarkMode className="text-gray-800 w-6 h-6" />
-              )}
+              <div className="transition-all duration-500 ease-in-out">
+                {theme === 'dark' ? (
+                  <FiSun className="w-6 h-6 text-yellow-500" />
+                ) : (
+                  <MdDarkMode className="w-6 h-6 text-gray-800" />
+                )}
+              </div>
             </button>
 
             <NavLink to="/download">
