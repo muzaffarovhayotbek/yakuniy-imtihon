@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
@@ -10,83 +10,40 @@ import Error from './pages/Error/Error';
 import Imageinfo from './pages/Imageinfo/Imageinfo';
 import Download from './pages/Download/Download';
 import Profile from './pages/Profile/Profile';
-import { Toaster } from 'react-hot-toast';
 import LikedImages from './pages/LikedImages/LikedImages';
-import { useGlobalContext } from './context/GlobalContext';
+import { Toaster } from 'react-hot-toast';
+import { auth } from './firebase/firabageConfig';
+
 function App() {
-  const { user } = useGlobalContext();
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center mt-20 text-lg font-bold">Loading...</div>;
+  }
 
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
-        <Route
-          index
-          element={
-            <MainLayout>
-              <Home></Home>
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="/about"
-          element={
-            <MainLayout>
-              <About></About>
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="/contact"
-          element={
-            <MainLayout>
-              <Contact></Contact>
-            </MainLayout>
-          }
-        ></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route
-          path="*"
-          element={
-            <MainLayout>
-              <Error />
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="/imageinfo/:id"
-          element={
-            <MainLayout>
-              <Imageinfo />
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="/download"
-          element={
-            <MainLayout>
-              <Download />
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="/profile"
-          element={
-            <MainLayout>
-              <Profile />
-            </MainLayout>
-          }
-        ></Route>
-        <Route
-          path="likedImages"
-          element={
-            <MainLayout>
-              <LikedImages />
-            </MainLayout>
-          }
-        ></Route>
+        <Route path="/" element={user ? <MainLayout><Home /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/about" element={user ? <MainLayout><About /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/contact" element={user ? <MainLayout><Contact /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/imageinfo/:id" element={user ? <MainLayout><Imageinfo /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/download" element={user ? <MainLayout><Download /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/profile" element={user ? <MainLayout><Profile /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="/likedImages" element={user ? <MainLayout><LikedImages /></MainLayout> : <Navigate to="/login" />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

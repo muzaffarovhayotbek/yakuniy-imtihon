@@ -3,6 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useGlobalContext } from '../context/GlobalContext';
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 export const useRegister = () => {
     const { dispatch } = useGlobalContext();
@@ -27,6 +28,9 @@ export const useRegister = () => {
             });
     };
 
-    return { registerWithGoogle };
+
+    const RegisterWithEmail = (displayName, email, password) => {}
+
+    return { registerWithGoogle, RegisterWithEmail };
 };
 

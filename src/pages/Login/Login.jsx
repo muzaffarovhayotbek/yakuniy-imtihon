@@ -64,7 +64,7 @@ function Login() {
             <h2 className="text-center text-2xl font-bold text-gray-900">
               Sign in to your account
             </h2>
-            <form className="mt-6 space-y-4" >
+            <form className="mt-6 space-y-4">
               <label className="relative block">
                 <input
                   type="email"

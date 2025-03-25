@@ -3,64 +3,40 @@ import { FaUser, FaKey } from 'react-icons/fa';
 import { MdOutlineMail } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { IoSunny } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useActionData, useNavigate } from 'react-router-dom';
 import { useRegister } from '../../hooks/useRegister';
 import useDarkModeStore from '../../store/useDarkMore';
 import { MdOutlineDarkMode } from 'react-icons/md';
 
+export const action = async ({ request }) => {
+  const form = await request.formData();
+  const displayName = form.get('displayName');
+  const email = form.get('email');
+  const password = form.get('password');
+  const confirm_password = form.get('confirm_password');
+
+  return {
+    displayName,
+    email,
+    password,
+    confirm_password,
+  };
+};
 function Register() {
+  const inputData = useActionData();
+  console.log(inputData);
+
   const { theme, toggle } = useDarkModeStore();
-  const { registerWithGoogle } = useRegister();
+  const { registerWithGoogle, RegisterWithEmail } = useRegister();
   const navigate = useNavigate();
 
   const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  function validate() {
-    if (user.length < 6) {
-      alert('Username eng kamida 6 ta harfdan iborat bo‘lishi kerak');
-      return false;
-    }
-
-    if (email.length < 6 || !email.endsWith('@gmail.com')) {
-      alert(
-        'Email eng kamida 6 ta harfli bo‘lishi va oxiri @gmail.com bilan tugashi kerak'
-      );
-      return false;
-    }
-
-    if (password.length < 8) {
-      alert('Parol kamida 8 ta belgidan iborat bo‘lishi kerak');
-      return false;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Parollar mos kelmadi');
-      return false;
-    }
-    return true;
-  }
-
-  function handleAdd(e) {
-    e.preventDefault();
-    if (!validate()) return;
-
-    const userData = {
-      username: user,
-      email,
-      password,
-    };
-    console.log(userData);
-
-    navigate('/login');
-  }
 
   return (
     <div
-      className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
-        }`}
+      className={`flex flex-col min-h-screen ${
+        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
+      }`}
     >
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600">
         <button className="cursor-pointer" onClick={toggle}>
@@ -91,8 +67,6 @@ function Register() {
             <label className="relative w-full">
               <MdOutlineMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 type="text"
                 placeholder="Email"
                 required
@@ -103,8 +77,6 @@ function Register() {
             <label className="relative w-full">
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
                 required
@@ -115,8 +87,6 @@ function Register() {
             <label className="relative w-full">
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
                 type="password"
                 placeholder="Confirm Password"
                 required
@@ -124,10 +94,7 @@ function Register() {
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
-            <button
-              onClick={handleAdd}
-              className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition"
-            >
+            <button className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition">
               Register
             </button>
             <button
