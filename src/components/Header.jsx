@@ -6,10 +6,13 @@ import { FaUnsplash } from 'react-icons/fa';
 import { useGlobalContext } from '../context/GlobalContext';
 import useDarkModeStore from '../store/useDarkMore';
 import { Link, NavLink } from 'react-router-dom';
+
 function Header() {
   const { theme, toggle } = useDarkModeStore();
   const { user } = useGlobalContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <div>
@@ -26,19 +29,15 @@ function Header() {
           <nav>
             <ul className="flex items-center gap-6 text-sm">
               <li>
-                <NavLink to="/" className="hover:text-gray-500">
+                <NavLink to="/" className="">
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about" className="hover:text-gray-500">
-                  About
-                </NavLink>
+                <NavLink to="/about">About</NavLink>
               </li>
               <li>
-                <NavLink to="/contact" className="hover:text-gray-500">
-                  Contact
-                </NavLink>
+                <NavLink to="/contact">Contact</NavLink>
               </li>
             </ul>
           </nav>
@@ -60,10 +59,10 @@ function Header() {
               <GrLike className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
 
-            {/* <div className="relative">
+            <div className="relative">
               <div
-                className="cursor-pointer w-8   rounded-full border border-gray-300"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="cursor-pointer w-8 rounded-full border border-gray-300"
+                onClick={handleMenuToggle}
               >
                 {user && user.photoURL ? (
                   <img
@@ -73,27 +72,31 @@ function Header() {
                   />
                 ) : (
                   <img
-                    className="rounded-full"
+                    className="w-8 h-8 rounded-full object-cover"
                     src="/default-avatar.png"
                     alt="Default avatar"
                   />
                 )}
-              </div> */}
+              </div>
 
-              {/* {isMenuOpen && (
-                <ul
-                  className="absolute right-0 mt-2 w-52 rounded-md bg-white shadow-lg z-50 border border-gray-200 
-                  transition-all duration-200 transform scale-95 opacity-100"
-                >
-                  <li className="flex items-center justify-between px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    <a href="/" className="flex justify-between w-full">
-                      <span>Profile</span>
+              {isMenuOpen && (
+                <ul className="absolute right-0 mt-2 w-52 rounded-md bg-white shadow-lg z-50 border border-gray-200 transition-all duration-200 transform scale-95 opacity-100">
+                  <div className="px-4 py-2">
+                    <h2 className="text-lg font-semibold">
+                      {user.displayName}
+                    </h2>
+                  </div>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    <NavLink
+                      to="/profile"
+                      className="flex justify-between w-full"
+                    >
+                      <span className="dark:text-white">Profile</span>
                       <span className="inline-flex items-center rounded-full bg-blue-500 px-2 py-1 text-xs font-semibold text-white">
                         New
                       </span>
-                    </a>
+                    </NavLink>
                   </li>
-
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     Settings
                   </li>
@@ -101,9 +104,10 @@ function Header() {
                     Logout
                   </li>
                 </ul>
-              )} */}
+              )}
             </div>
           </div>
+        </div>
       </header>
     </div>
   );

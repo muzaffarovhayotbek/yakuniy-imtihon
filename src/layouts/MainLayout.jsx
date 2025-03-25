@@ -7,12 +7,11 @@ import Footer from '../components/Footer';
 function MainLayout({ children }) {
   const { theme, toggle } = useDarkModeStore();
   const { user } = useGlobalContext();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div
       className={`flex flex-col min-h-screen ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
+        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black  '
       }`}
     >
       <Header />
