@@ -3,34 +3,50 @@ import { FaUser, FaKey } from 'react-icons/fa';
 import { MdOutlineMail } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { IoSunny } from 'react-icons/io5';
-import { useActionData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../../hooks/useRegister';
 import useDarkModeStore from '../../store/useDarkMore';
 import { MdOutlineDarkMode } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
-export const action = async ({ request }) => {
-  const form = await request.formData();
-  const displayName = form.get('displayName');
-  const email = form.get('email');
-  const password = form.get('password');
-  const confirm_password = form.get('confirm_password');
+function validate(username, email, password, confirmPassword) {
+  if (username.length < 8) {
+    toast.error('UserName eng kamida 8 ta harf');
+    return false;
+  }
+  if (email.length < 6 || !email.endsWith('@gmail.com')) {
+    toast.error(
+      'Email eng kamida 6 ta harfli bo‘lishi va oxiri @gmail.com bilan tugashi kerak'
+    );
+    return false;
+  }
+  if (password.length < 8) {
+    toast.error('Password 8 ta raqam');
+    return false;
+  }
+  if (password !== confirmPassword) {
+    toast.error('Parollar mos kelmadi!');
+    return false;
+  }
+  return true;
+}
 
-  return {
-    displayName,
-    email,
-    password,
-    confirm_password,
-  };
-};
 function Register() {
-  const inputData = useActionData();
-  console.log(inputData);
+  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const { theme, toggle } = useDarkModeStore();
-  const { registerWithGoogle, RegisterWithEmail } = useRegister();
+  const { registerWithGoogle } = useRegister();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState('');
+  function handleSignUp(e) {
+    e.preventDefault();
+    if (!validate(username, email, password, confirmPassword)) return;
+    toast.success('Ro‘yxatdan o‘tish muvaffaqiyatli!');
+    navigate('/');
+  }
 
   return (
     <div
@@ -39,7 +55,10 @@ function Register() {
       }`}
     >
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600">
-        <button className="cursor-pointer" onClick={toggle}>
+        <button
+          className="cursor-pointer absolute top-4 right-4"
+          onClick={toggle}
+        >
           {theme === 'dark' ? (
             <IoSunny className="text-yellow-500 w-6 h-6" />
           ) : (
@@ -51,54 +70,56 @@ function Register() {
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Create your account
           </h2>
-          <form className="mt-6 flex flex-col gap-4">
+          <form className="mt-6 flex flex-col gap-4" onSubmit={handleSignUp}>
             <label className="relative w-full">
               <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
                 type="text"
                 placeholder="User"
-                required
-                name="displayName"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
             <label className="relative w-full">
               <MdOutlineMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
-                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
                 placeholder="Email"
-                required
-                name="email"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
             <label className="relative w-full">
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
-                required
-                name="password"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
             <label className="relative w-full">
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 type="password"
                 placeholder="Confirm Password"
-                required
-                name="confirm_password"
                 className="input input-bordered w-full p-3 rounded-md border-gray-300"
               />
             </label>
-            <button className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition"
+            >
               Register
             </button>
             <button
               onClick={registerWithGoogle}
+              type="button"
               className="flex items-center justify-center gap-2 bg-black text-white p-3 rounded-md hover:bg-gray-800 transition"
             >
               Google <FcGoogle />

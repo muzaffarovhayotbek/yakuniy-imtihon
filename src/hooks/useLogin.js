@@ -8,21 +8,46 @@ export const useLogin = () => {
   const { dispatch } = useGlobalContext();
   const navigate = useNavigate();
 
-  const loginWithEmail = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
+  const loginWithEmail = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-        dispatch({ type: 'LOGIN', payload: user });
-        toast.success('Welcome back, ' + user.displayName);
+      console.log('User logged in:', user);
 
-        navigate('/');
-      })
-      .catch((error) => {
-        console.error('Error during email login:', error);
-        toast.error(error.message);
-      });
+      dispatch({ type: 'LOGIN', payload: user });
+
+      toast.success(`Xush kelibsiz, ${user.displayName || 'Foydalanuvchi'}!`);
+
+      navigate('/');
+    } catch (error) {
+      console.error('Login error:', error);
+
+      switch (error.code) {
+        case 'auth/invalid-credential':
+        case 'auth/wrong-password':
+          toast.error('Email yoki parol noto‘g‘ri!');
+          break;
+        case 'auth/user-not-found':
+          toast.error('Bunday foydalanuvchi mavjud emas.');
+          break;
+        case 'auth/invalid-email':
+          toast.error('Noto‘g‘ri email manzil kiritildi.');
+          break;
+        case 'auth/too-many-requests':
+          toast.error(
+            'Ko‘p marta noto‘g‘ri urinish! Keyinroq qayta urinib ko‘ring.'
+          );
+          break;
+
+        default:
+          toast.error(`Kirishda xatolik yuz berdi: ${error.message}`);
+      }
+    }
   };
 
   return { loginWithEmail };

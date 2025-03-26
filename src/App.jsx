@@ -19,14 +19,17 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-20 text-lg font-bold">Loading...</div>;
+    return (
+      <div className="text-center mt-20 text-lg font-bold">Loading...</div>
+    );
   }
 
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <div>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
       {user ? (
         <MainLayout>
           <Outlet />

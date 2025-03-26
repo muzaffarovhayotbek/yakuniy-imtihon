@@ -1,14 +1,19 @@
-import { auth } from "../firebase/firabageConfig";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from '../firebase/firabageConfig';
+import { 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    createUserWithEmailAndPassword, 
+    updateProfile 
+} from "firebase/auth";
 import { useGlobalContext } from '../context/GlobalContext';
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 
 export const useRegister = () => {
     const { dispatch } = useGlobalContext();
     const navigate = useNavigate(); 
 
+    // Google orqali ro‘yxatdan o‘tish
     const registerWithGoogle = () => {
         const provider = new GoogleAuthProvider();
 
@@ -28,9 +33,29 @@ export const useRegister = () => {
             });
     };
 
+    // Email va parol orqali ro‘yxatdan o‘tish
+    const registerWithEmail = (displayName, email, password) => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                
+                // Foydalanuvchi profilini yangilash
+                updateProfile(user, { displayName })
+                    .then(() => {
+                        dispatch({ type: "LOGIN", payload: { ...user, displayName } });
+                        toast.success("Account created successfully! Welcome, " + displayName);
+                        navigate("/");
+                    })
+                    .catch((error) => {
+                        console.error("Error updating profile:", error);
+                        toast.error(error.message);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error);
+                toast.error(error.message);
+            });
+    };
 
-    const RegisterWithEmail = (displayName, email, password) => {}
-
-    return { registerWithGoogle, RegisterWithEmail };
+    return { registerWithGoogle, registerWithEmail };
 };
-
