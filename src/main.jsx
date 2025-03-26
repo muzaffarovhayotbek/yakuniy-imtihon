@@ -16,6 +16,7 @@ import Download from './pages/Download/Download';
 import Profile from './pages/Profile/Profile';
 import LikedImages from './pages/LikedImages/LikedImages';
 import './index.css';
+
 const router = createBrowserRouter([
   {
     path: '/',
