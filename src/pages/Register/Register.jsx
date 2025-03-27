@@ -17,8 +17,8 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { theme, toggle } = useDarkModeStore();
-  const { registerWithEmail,  } = useRegister();
-  const {registerWithGoogle} = useGoogle()
+  const { registerWithEmail } = useRegister();
+  const { registerWithGoogle } = useGoogle();
   const navigate = useNavigate();
 
   async function handleSignUp(e) {
