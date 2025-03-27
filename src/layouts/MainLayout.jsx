@@ -11,7 +11,7 @@ function MainLayout() {
       <main className="flex-grow">
         <Outlet /> 
       </main>
-      <footer/>
+      <Footer/>
     </div>
   );
 }
