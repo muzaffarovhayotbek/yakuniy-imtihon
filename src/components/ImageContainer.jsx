@@ -37,7 +37,6 @@ function ImageContainer({ images }) {
                 className="relative cursor-pointer group"
                 onClick={() => handleRedirect(image.id)}
               >
-                {/* Like tugmasi */}
                 <span
                   onClick={(e) => {
                     e.stopPropagation();
@@ -52,14 +51,12 @@ function ImageContainer({ images }) {
                   )}
                 </span>
 
-                {/* Rasm */}
                 <img
                   className="w-full h-auto object-cover rounded-md"
                   src={image.urls.regular}
                   alt={image.alt_description || 'Image'}
                 />
 
-                {/* Avatar va user nomi */}
                 {image.user?.profile_image?.large ? (
                   <span className="absolute left-2 bottom-2 flex gap-2 items-center invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-400">
                     <img
@@ -70,19 +67,20 @@ function ImageContainer({ images }) {
                     <p className="text-white text-sm">{image.user.name}</p>
                   </span>
                 ) : (
-                  <p className="absolute left-2 bottom-2 text-white text-sm">No Avatar</p>
+                  <p className="absolute left-2 bottom-2 text-white text-sm">
+                    No Avatar
+                  </p>
                 )}
 
-                {/* Yuklab olish tugmasi */}
                 <span className="absolute h-8 w-8 rounded-full flex justify-center items-center cursor-pointer right-1.5 bottom-2 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-400">
                   <a
-                    onClick={(e) => e.stopPropagation()}
-                    download
                     href={
                       image.links?.download
                         ? `${image.links.download}&force=true`
                         : '#'
                     }
+                    download
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <FaDownload className="text-white" />
                   </a>

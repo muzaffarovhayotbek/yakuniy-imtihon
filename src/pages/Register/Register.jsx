@@ -8,28 +8,7 @@ import { useRegister } from '../../hooks/useRegister';
 import useDarkModeStore from '../../store/useDarkMore';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import toast from 'react-hot-toast';
-
-function validate(username, email, password, confirmPassword) {
-  if (username.length < 8) {
-    toast.error('UserName eng kamida 8 ta harf');
-    return false;
-  }
-  if (email.length < 6 || !email.endsWith('@gmail.com')) {
-    toast.error(
-      'Email eng kamida 6 ta harfli bo‘lishi va oxiri @gmail.com bilan tugashi kerak'
-    );
-    return false;
-  }
-  if (password.length < 8) {
-    toast.error('Password 8 ta raqam');
-    return false;
-  }
-  if (password !== confirmPassword) {
-    toast.error('Parollar mos kelmadi!');
-    return false;
-  }
-  return true;
-}
+import { useGoogle } from '../../hooks/useGoogle';
 
 function Register() {
   const [username, setUserName] = useState('');
@@ -38,14 +17,44 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { theme, toggle } = useDarkModeStore();
-  const { registerWithGoogle } = useRegister();
+  const { registerWithEmail,  } = useRegister();
+  const {registerWithGoogle} = useGoogle()
   const navigate = useNavigate();
 
-  function handleSignUp(e) {
+  async function handleSignUp(e) {
     e.preventDefault();
-    if (!validate(username, email, password, confirmPassword)) return;
-    toast.success('Ro‘yxatdan o‘tish muvaffaqiyatli!');
-    navigate('/');
+
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match!');
+      return;
+    }
+
+    try {
+      const user = await registerWithEmail(
+        username,
+        email,
+        password,
+        confirmPassword
+      );
+      if (user) {
+        toast.success('Registration successful!');
+        navigate('/login');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Registration failed!');
+    }
+  }
+
+  async function handleGoogleSignUp() {
+    try {
+      const user = await registerWithGoogle();
+      if (user) {
+        toast.success('Registration successful!');
+        navigate('/login');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Google Sign-In failed!');
+    }
   }
 
   return (
@@ -117,14 +126,13 @@ function Register() {
             >
               Register
             </button>
-            <button
-              onClick={registerWithGoogle}
-              type="button"
-              className="flex items-center justify-center gap-2 bg-black text-white p-3 rounded-md hover:bg-gray-800 transition"
-            >
-              Google <FcGoogle />
-            </button>
           </form>
+          <button
+            onClick={registerWithGoogle}
+            className="flex items-center justify-center gap-2 bg-red-500 text-white p-3 rounded-md hover:bg-red-600 transition mt-4 w-full"
+          >
+            <FcGoogle className="w-6 h-6" /> Sign up with Google
+          </button>
           <div className="text-center mt-4">
             <p className="text-sm text-gray-600">Already have an account?</p>
             <a

@@ -1,29 +1,62 @@
-import toast from 'react-hot-toast';
 import { auth } from '../firebase/firabageConfig';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export const useRegister = () => {
   const { dispatch } = useGlobalContext();
   const navigate = useNavigate();
 
-  const registerWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
+  const registerWithEmail = async (username, email, password, repassword) => {
+    if (!username || !email || !password || !repassword) {
+      toast.error('Barcha maydonlarni to‘ldiring!');
+      return null;
+    }
 
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        dispatch({ type: 'LOGIN', payload: user });
-        toast.success(`Welcome  ${user.displayName}!`);
-        navigate('/');
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast.error(`Xato: ${errorCode} - ${errorMessage}`);
-      });
+    if (password !== repassword) {
+      toast.error('Parollar mos kelmadi!');
+      return null;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      await updateProfile(user, { displayName: username });
+
+      console.log('User registered:', user);
+
+      dispatch({ type: 'REGISTER', payload: user });
+
+      toast.success(`Xush kelibsiz, ${username}!`);
+      navigate('/login');
+
+      return user;
+    } catch (error) {
+      console.error('Register error:', error);
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          toast.error('Bu email allaqachon ro‘yxatdan o‘tgan.');
+          break;
+        case 'auth/invalid-email':
+          toast.error('Noto‘g‘ri email manzil kiritildi.');
+          break;
+        case 'auth/weak-password':
+          toast.error('Parol juda oddiy. Iltimos, murakkabroq parol tanlang.');
+          break;
+        default:
+          toast.error(`Ro‘yxatdan o‘tishda xatolik: ${error.message}`);
+      }
+
+      return null;
+    }
   };
 
-  return { registerWithGoogle };
+  return { registerWithEmail };
 };

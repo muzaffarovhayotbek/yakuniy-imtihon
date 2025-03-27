@@ -24,6 +24,8 @@ export const useLogin = () => {
       toast.success(`Xush kelibsiz, ${user.displayName || 'Foydalanuvchi'}!`);
 
       navigate('/');
+
+      return user;
     } catch (error) {
       console.error('Login error:', error);
 
@@ -43,10 +45,10 @@ export const useLogin = () => {
             'Ko‘p marta noto‘g‘ri urinish! Keyinroq qayta urinib ko‘ring.'
           );
           break;
-
         default:
           toast.error(`Kirishda xatolik yuz berdi: ${error.message}`);
       }
+      return null;
     }
   };
 
