@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { MdOutlineDarkMode, MdDownload } from 'react-icons/md';
-import { IoSunny } from 'react-icons/io5';
 import { GrLike } from 'react-icons/gr';
 import { FaUnsplash } from 'react-icons/fa';
 import { useGlobalContext } from '../context/GlobalContext';
 import useDarkModeStore from '../store/useDarkMore';
 import { Link, NavLink } from 'react-router-dom';
 import { FiSun } from "react-icons/fi";
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebase/firabageConfig'
 import { MdDarkMode } from "react-icons/md";
+import toast from 'react-hot-toast';
 
 function Header() {
   const { theme, toggle } = useDarkModeStore();
-  const { user } = useGlobalContext();
+  const { user, dispatch } = useGlobalContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+
+  const signOutUser = async () => {
+    try {
+      await signOut(auth)
+      dispatch({type:'LOGOUT' })
+      toast.success('See yo soon')
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
 
   return (
     <div>
@@ -59,15 +71,14 @@ function Header() {
               <MdDownload className="w-6 h-6 hover:text-gray-500" />
             </NavLink>
 
-            <NavLink to="/likedImages">
-              <GrLike className="w-6 h-6 hover:text-gray-500" />
-            </NavLink>
+            
 
             <div className="relative">
               <div
                 className="cursor-pointer w-8 rounded-full border border-gray-300"
                 onClick={handleMenuToggle}
               >
+
                 {user && user.photoURL ? (
                   <img
                     className="w-8 h-8 rounded-full object-cover"
@@ -105,7 +116,7 @@ function Header() {
                     Settings
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
-                    Logout
+                    <button onClick={signOutUser}>Logout</button>
                   </li>
                 </ul>
               )}
