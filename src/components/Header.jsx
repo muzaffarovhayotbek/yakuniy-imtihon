@@ -8,7 +8,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/firabageConfig';
 import toast from 'react-hot-toast';
-
+import { FaHeart } from "react-icons/fa";
 function Header() {
   const { theme, toggle } = useDarkModeStore();
   const { user, dispatch } = useGlobalContext();
@@ -74,6 +74,9 @@ function Header() {
 
           <NavLink to="/download">
             <MdDownload className="w-6 h-6 hover:text-gray-500" />
+          </NavLink>
+          <NavLink to='/likedImages'>
+            <FaHeart className='w-6 h-6'/>
           </NavLink>
 
           <div className="relative">

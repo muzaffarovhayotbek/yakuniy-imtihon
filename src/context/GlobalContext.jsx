@@ -28,7 +28,7 @@ const globalReducer = (state, action) => {
     case 'LOGOUT':
       return { ...state, user: null };
     case 'LIKE':
-      return { ...state, likedImages: [...state.likedImages, payload] };
+      return { ...state, likedImages: [...state.likedImages, action.payload] };
     case 'UNLIKE':
       return {
         ...state,
