@@ -40,7 +40,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <GlobalContextProvider>
-      <Toaster position="top-right" reverseOrder={false} /> {/* ✅ TOASTERNI QO'SHDIK */}
+      <Toaster position="top-right" reverseOrder={false} />
       <RouterProvider router={router} />
     </GlobalContextProvider>
   </Provider>

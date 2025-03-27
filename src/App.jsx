@@ -10,15 +10,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const { user, dispatch } = useGlobalContext();
-  
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch({ type: 'LOGIN', payload: user });
-      } else {
-        dispatch({ type: 'LOGOUT' });
-        toast.warn('User Already Signed Out');
-      }
+      dispatch({ type: 'LOGIN', payload: user });
+      dispatch({ type: 'AUTH_READY' });
       setLoading(false);
     });
 
