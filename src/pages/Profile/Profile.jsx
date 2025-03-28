@@ -73,16 +73,15 @@ function Profile() {
                 about AI technology.
               </p>
               <div className="flex justify-end gap-4">
-                <button
-                  onClick={handleFollow}
-                  className={`px-4 py-2 text-sm ${
-                    follow ? 'bg-green-500' : 'bg-blue-500'
-                  } text-white rounded-md hover:bg-blue-600`}
-                >
-                  {follow ? 'Following' : 'Follow'}{' '}
-                </button>
+              <button
+  onClick={handleFollow}
+  className={`px-4 py-2 text-sm ${follow ? 'bg-blue-500' : 'bg-blue-500'} text-white rounded-md hover:bg-blue-600 cursor-pointer`}
+>
+  {follow ? 'Following' : 'Follow'} 
+</button>
+
                 <NavLink
-                  className="px-4 py-2 text-sm bg-transparent text-blue-500 border border-blue-500 rounded-md hover:bg-blue-500 hover:text-white"
+                  className="px-4 py-2 text-sm bg-transparent text-blue-500 border border-blue-500 rounded-md hover:bg-blue-500 hover:text-white cursor-pointer"
                   to="/contact"
                 >
                   <button>Message</button>
