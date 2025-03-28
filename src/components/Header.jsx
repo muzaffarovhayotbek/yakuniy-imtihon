@@ -8,7 +8,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/firabageConfig';
 import toast from 'react-hot-toast';
-import { FaHeart } from "react-icons/fa";
+import { FaHeart } from 'react-icons/fa';
 function Header() {
   const { theme, toggle } = useDarkModeStore();
   const { user, dispatch } = useGlobalContext();
@@ -33,34 +33,27 @@ function Header() {
           <FaUnsplash className="w-8 h-8" />
           <span>SuRaT</span>
         </Link>
+        <nav className="flex flex-col lg:flex-row gap-4 p-4 rounded-lg">
+          <NavLink
+            to="/"
+            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+          >
+            Home
+          </NavLink>
 
-        <nav>
-          <ul className="flex items-center gap-6 text-sm">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
-              >
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) => (isActive ? 'text-blue-500' : '')}
-              >
-                Contact
-              </NavLink>
-            </li>
-          </ul>
+          <NavLink
+            to="/about"
+            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+          >
+            About
+          </NavLink>
+
+          <NavLink
+            to="/contact"
+            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+          >
+            Contact
+          </NavLink>
         </nav>
 
         <div className="flex items-center gap-5">
@@ -75,8 +68,8 @@ function Header() {
           <NavLink to="/download">
             <MdDownload className="w-6 h-6 hover:text-gray-500" />
           </NavLink>
-          <NavLink to='/likedImages'>
-            <FaHeart className='w-6 h-6'/>
+          <NavLink to="/likedImages">
+            <FaHeart className="w-6 h-6" />
           </NavLink>
 
           <div className="relative">

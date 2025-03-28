@@ -3,15 +3,17 @@ import { FaSearch } from 'react-icons/fa';
 
 function FormInput({ type, placeholder, name }) {
   return (
-    <label className="input input-border flex items-center gap-2 w-full input-group-sm md:input-md">
+    <div className="relative w-full">
       <input
         type={type}
-        placeholder={placeholder}
         name={name}
-        className="grow"
+        placeholder={placeholder}
+        className="w-full pl-4 pr-10 py-2 border rounded-md"
       />
-      <FaSearch className="h-4 w-4 opacity-70" />
-    </label>
+      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer">
+        <FaSearch className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+      </div>
+    </div>
   );
 }
 
