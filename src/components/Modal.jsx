@@ -23,7 +23,7 @@ function Modal() {
   } , [data])
 
   return (
-    <dialog id="my_modal_1" className="modal sm:flex">
+    <dialog id="my_modal_1" className="modal">
       <div className="modal-box">
         <h3 className="font-bold text-black mb-4">Reset password</h3>
         
