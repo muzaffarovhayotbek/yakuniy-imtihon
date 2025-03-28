@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useActionData, useNavigate } from 'react-router-dom';
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { FaHeart, FaRegHeart, FaDownload } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleLike } from '../../store/likeSlice';
-import toast from 'react-hot-toast';
 import Search from '../../components/Search';
 import { useFetch } from '../../hooks/useFetch';
 import ImageContainer from '../../components/ImageContainer';
@@ -30,7 +26,6 @@ function Home() {
     }&page=${pageParam}`
   );
   console.log(data);
-  
 
   useEffect(() => {
     if (data && data.results) {
@@ -39,16 +34,6 @@ function Home() {
       );
     }
   }, [data, pageParam]);
-
-  const handleLike = (id) => {
-    toast.success('You liked this image ❤️');
-    dispatch(toggleLike(id));
-  };
-
-  const handleUnLike = (id) => {
-    toast.error('You unliked this image 🗑️');
-    dispatch(toggleLike(id));
-  };
 
   return (
     <div className="container mx-auto my-5 px-10">

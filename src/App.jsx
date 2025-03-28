@@ -22,10 +22,15 @@ function App() {
   }, [dispatch]);
 
   if (loading) {
-    return <div className="text-center mt-20 text-lg font-bold">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <div>
