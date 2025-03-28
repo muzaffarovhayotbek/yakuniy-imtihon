@@ -25,8 +25,8 @@ function ImageContainer({ images }) {
   };
 
   return (
-    <div className="relative">
-      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 3, 900: 4 }}>
+    <div className="relative px-2 md:px-4 lg:px-8">
+      <ResponsiveMasonry columnsCountBreakPoints={{ 320: 1, 480: 2, 768: 3, 1024: 4 }}>
         <Masonry gutter="10px">
           {images.map((image) => {
             const isLiked = likedImages.some((img) => img.id === image.id);
@@ -42,7 +42,7 @@ function ImageContainer({ images }) {
                     e.stopPropagation();
                     addLikedImages(image);
                   }}
-                  className="absolute h-8 w-8 border rounded-full flex justify-center items-center cursor-pointer right-1.5 top-1.5 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-400"
+                  className="absolute h-8 w-8 border rounded-full flex justify-center items-center cursor-pointer right-2 top-2 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-black bg-opacity-50"
                 >
                   {isLiked ? (
                     <FaHeart className="text-red-600" />
@@ -57,22 +57,22 @@ function ImageContainer({ images }) {
                   alt={image.alt_description || 'Image'}
                 />
 
-                {image.user?.profile_image?.large ? (
-                  <span className="absolute left-2 bottom-2 flex gap-2 items-center invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-400">
-                    <img
-                      src={image.user.profile_image.large}
-                      alt={`${image.user.name} avatar`}
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <p className="text-white text-sm">{image.user.name}</p>
-                  </span>
-                ) : (
-                  <p className="absolute left-2 bottom-2 text-white text-sm">
-                    No Avatar
-                  </p>
-                )}
+                <div className="absolute left-2 bottom-2 flex gap-2 items-center invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-black bg-opacity-50 p-1 rounded-md">
+                  {image.user?.profile_image?.large ? (
+                    <>
+                      <img
+                        src={image.user.profile_image.large}
+                        alt={`${image.user.name} avatar`}
+                        className="w-8 h-8 rounded-full"
+                      />
+                      <p className="text-white text-sm truncate max-w-[100px]">{image.user.name}</p>
+                    </>
+                  ) : (
+                    <p className="text-white text-sm">No Avatar</p>
+                  )}
+                </div>
 
-                <span className="absolute h-8 w-8 rounded-full flex justify-center items-center cursor-pointer right-1.5 bottom-2 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-400">
+                <span className="absolute h-8 w-8 rounded-full flex justify-center items-center cursor-pointer right-2 bottom-2 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-black bg-opacity-50">
                   <a
                     href={
                       image.links?.download
