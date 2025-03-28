@@ -36,21 +36,39 @@ function Header() {
         <nav className="flex flex-col lg:flex-row gap-4 p-4 rounded-lg">
           <NavLink
             to="/"
-            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-md ${
+                isActive
+                  ? 'bg-gray-500 text-white'
+                  : 'text-gray-800 hover:bg-gray-300'
+              }`
+            }
           >
             Home
           </NavLink>
 
           <NavLink
             to="/about"
-            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-md ${
+                isActive
+                  ? 'bg-gray-500 text-white'
+                  : 'text-gray-800 hover:bg-gray-300'
+              }`
+            }
           >
             About
           </NavLink>
 
           <NavLink
             to="/contact"
-            className="px-4 py-2 rounded-md text-gray-800 hover:bg-gray-300 active:bg-gray-500"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-md ${
+                isActive
+                  ? 'bg-gray-500 text-white'
+                  : 'text-gray-800 hover:bg-gray-300'
+              }`
+            }
           >
             Contact
           </NavLink>
