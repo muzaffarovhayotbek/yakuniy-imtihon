@@ -28,12 +28,12 @@ function Header() {
 
   return (
     <header className="mt-6 px-10 sm:mt-5">
-      <div className="container mx-auto flex flex-col sm:flex-row gap-2.5 items-center justify-between p-2">
+      <div className="container mx-auto flex flex-col sm:flex-row gap-4 items-center justify-between p-2">
         <Link className="flex items-center gap-3 text-xl font-semibold" to="/">
           <FaUnsplash className="w-8 h-8" />
           <span>SuRaT</span>
         </Link>
-        <nav className="flex ">
+        <nav className="flex gap-4 ">
           <NavLink
             to="/"
             className={({ isActive }) =>
