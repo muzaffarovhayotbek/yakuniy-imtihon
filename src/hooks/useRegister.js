@@ -8,13 +8,18 @@ export const useRegister = () => {
   const { dispatch } = useGlobalContext();
   const navigate = useNavigate();
 
-  const registerWithEmail = async (username, email, password, repassword) => {
-    if (!username || !email || !password || !repassword) {
+  const registerWithEmail = async (
+    username,
+    email,
+    password,
+    confirmPassword
+  ) => {
+    if (!username || !email || !password || !confirmPassword) {
       toast.error('Barcha maydonlarni to‘ldiring!');
       return null;
     }
 
-    if (password !== repassword) {
+    if (password !== confirmPassword) {
       toast.error('Parollar mos kelmadi!');
       return null;
     }

@@ -24,27 +24,31 @@ function Register() {
   async function handleSignUp(e) {
     e.preventDefault();
 
+    if (!username || !email || !password || !confirmPassword) {
+      toast.error('Barcha maydonlarni to‘ldiring!');
+      return;
+    }
+
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match!');
+      toast.error('Parollar mos kelmadi!');
       return;
     }
 
     try {
-      const user = await registerWithEmail(username, email, password);
+      const user = await registerWithEmail(username, email, password, confirmPassword);
       if (user) {
-        toast.success('Registration successful!');
+        toast.success('Ro‘yxatdan o‘tish muvaffaqiyatli yakunlandi!');
         navigate('/login');
       }
     } catch (error) {
-      toast.error(error.message || 'Registration failed!');
+      toast.error(error.message || 'Ro‘yxatdan o‘tishda xatolik yuz berdi!');
     }
   }
 
   return (
     <div
-      className={`flex flex-col min-h-screen ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
-      }`}
+      className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
+        }`}
     >
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-600 p-6">
         <button
@@ -59,9 +63,8 @@ function Register() {
         </button>
 
         <div
-          className={`w-full max-w-md p-6 rounded-lg shadow-lg ${
-            theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'
-          }`}
+          className={`w-full max-w-md p-6 rounded-lg shadow-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'
+            }`}
         >
           <h2 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
             Create your account
@@ -75,11 +78,10 @@ function Register() {
                 type="text"
                 placeholder="Username"
                 required
-                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
-                  theme === 'dark'
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
-                }`}
+                  }`}
               />
               <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
@@ -91,11 +93,10 @@ function Register() {
                 type="email"
                 placeholder="Email"
                 required
-                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
-                  theme === 'dark'
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
-                }`}
+                  }`}
               />
               <MdOutlineMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
@@ -107,11 +108,10 @@ function Register() {
                 type="password"
                 placeholder="Password"
                 required
-                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
-                  theme === 'dark'
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
-                }`}
+                  }`}
               />
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
@@ -123,11 +123,10 @@ function Register() {
                 type="password"
                 placeholder="Confirm Password"
                 required
-                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
-                  theme === 'dark'
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
-                }`}
+                  }`}
               />
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
