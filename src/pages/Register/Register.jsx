@@ -30,12 +30,7 @@ function Register() {
     }
 
     try {
-      const user = await registerWithEmail(
-        username,
-        email,
-        password,
-        confirmPassword
-      );
+      const user = await registerWithEmail(username, email, password);
       if (user) {
         toast.success('Registration successful!');
         navigate('/login');
@@ -45,27 +40,15 @@ function Register() {
     }
   }
 
-  async function handleGoogleSignUp() {
-    try {
-      const user = await registerWithGoogle();
-      if (user) {
-        toast.success('Registration successful!');
-        navigate('/login');
-      }
-    } catch (error) {
-      toast.error(error.message || 'Google Sign-In failed!');
-    }
-  }
-
   return (
     <div
       className={`flex flex-col min-h-screen ${
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'
       }`}
     >
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-600">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-600 p-6">
         <button
-          className="cursor-pointer absolute top-4 right-4"
+          className="cursor-pointer absolute top-5 right-5"
           onClick={toggle}
         >
           {theme === 'dark' ? (
@@ -75,88 +58,105 @@ function Register() {
           )}
         </button>
 
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+        <div
+          className={`w-full max-w-md p-6 rounded-lg shadow-lg ${
+            theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'
+          }`}
+        >
+          <h2 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
             Create your account
           </h2>
-          <form className="mt-6 flex flex-col gap-4" onSubmit={handleSignUp}>
-            <label className="relative w-full">
-              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+          <form className="mt-6 space-y-4" onSubmit={handleSignUp}>
+            <label className="relative block">
               <input
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
                 type="text"
-                placeholder="User"
+                placeholder="Username"
+                required
                 className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
                 }`}
               />
+              <FaUser className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
-            <label className="relative w-full">
-              <MdOutlineMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+            <label className="relative block">
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Email"
+                required
                 className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
                 }`}
               />
+              <MdOutlineMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
-            <label className="relative w-full">
-              <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+            <label className="relative block">
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
+                required
                 className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
                 }`}
               />
-            </label>
-            <label className="relative w-full">
               <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </label>
+
+            <label className="relative block">
               <input
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 type="password"
                 placeholder="Confirm Password"
+                required
                 className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800 text-white placeholder-gray-400'
                     : 'bg-white text-black placeholder-gray-500'
                 }`}
               />
+              <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </label>
+
             <button
               type="submit"
-              className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition"
             >
               Register
             </button>
           </form>
+
           <button
             onClick={registerWithGoogle}
-            className="flex items-center justify-center gap-2 bg-red-500 text-white p-3 rounded-md hover:bg-red-600 transition mt-4 w-full"
+            className="w-full flex items-center justify-center gap-2 bg-black text-white p-3 rounded-md mt-4"
           >
             <FcGoogle className="w-6 h-6" /> Sign up with Google
           </button>
-          <div className="text-center mt-4">
-            <p className="text-sm text-gray-600">Already have an account?</p>
-            <a
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-              href="/login"
-            >
-              Sign in
-            </a>
+
+          <div className="mt-4 text-center text-sm text-gray-600">
+            <p>
+              Already have an account?{' '}
+              <a
+                className="text-indigo-600 hover:text-indigo-500 font-medium"
+                href="/login"
+              >
+                Sign in
+              </a>
+            </p>
           </div>
         </div>
       </div>

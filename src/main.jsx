@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { GlobalContextProvider } from './context/GlobalContext.jsx';
 import App from './App';
-import { Toaster } from 'react-hot-toast'; // 🔥 IMPORT TOASTER!
+import { Toaster } from 'react-hot-toast';
 import Home, { action as HomeAction } from './pages/Home/Home.jsx';
 import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
@@ -30,10 +30,10 @@ const router = createBrowserRouter([
       { path: 'download', element: <Download /> },
       { path: 'profile', element: <Profile /> },
       { path: 'likedImages', element: <LikedImages /> },
-      { path: 'register', element: <Register /> },
     ],
   },
   { path: '/login', element: <Login /> },
+  { path: '/register', element: <Register /> },
   { path: '*', element: <Error /> },
 ]);
 

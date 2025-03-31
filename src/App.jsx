@@ -29,9 +29,6 @@ function App() {
     );
   }
 
-  const isAuthPage =
-    location.pathname === '/login' || location.pathname === '/register';
-
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
@@ -39,7 +36,7 @@ function App() {
         <MainLayout>
           <Outlet />
         </MainLayout>
-      ) : isAuthPage ? (
+      ) : location.pathname === '/login' ? ( 
         <Outlet />
       ) : (
         <Navigate to="/login" replace />
