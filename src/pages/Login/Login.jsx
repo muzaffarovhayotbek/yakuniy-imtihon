@@ -69,25 +69,35 @@ function Login() {
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <label className="relative block">
                 <input
-                  type="email"
-                  placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="email"
+                  placeholder="Email"
                   required
+                  className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                    theme === 'dark'
+                      ? 'bg-gray-800 text-white placeholder-gray-400'
+                      : 'bg-white text-black placeholder-gray-500'
+                  }`}
                 />
+
                 <CgMail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               </label>
 
               <label className="relative block">
                 <input
-                  type="password"
-                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="email"
+                  placeholder="Password"
                   required
+                  className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                    theme === 'dark'
+                      ? 'bg-gray-800 text-white placeholder-gray-400'
+                      : 'bg-white text-black placeholder-gray-500'
+                  }`}
                 />
+
                 <FaKey className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               </label>
 

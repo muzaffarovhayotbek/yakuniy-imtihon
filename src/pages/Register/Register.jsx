@@ -87,7 +87,11 @@ function Register() {
                 onChange={(e) => setUserName(e.target.value)}
                 type="text"
                 placeholder="User"
-                className="input input-bordered w-full p-3 rounded-md border-gray-300"
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white placeholder-gray-400'
+                    : 'bg-white text-black placeholder-gray-500'
+                }`}
               />
             </label>
             <label className="relative w-full">
@@ -97,7 +101,11 @@ function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Email"
-                className="input input-bordered w-full p-3 rounded-md border-gray-300"
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white placeholder-gray-400'
+                    : 'bg-white text-black placeholder-gray-500'
+                }`}
               />
             </label>
             <label className="relative w-full">
@@ -107,7 +115,11 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
-                className="input input-bordered w-full p-3 rounded-md border-gray-300"
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white placeholder-gray-400'
+                    : 'bg-white text-black placeholder-gray-500'
+                }`}
               />
             </label>
             <label className="relative w-full">
@@ -117,7 +129,11 @@ function Register() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 type="password"
                 placeholder="Confirm Password"
-                className="input input-bordered w-full p-3 rounded-md border-gray-300"
+                className={`input input-bordered w-full p-3 rounded-md border-gray-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white placeholder-gray-400'
+                    : 'bg-white text-black placeholder-gray-500'
+                }`}
               />
             </label>
             <button
