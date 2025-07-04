@@ -17,6 +17,7 @@ import Download from './pages/Download/Download';
 import Profile from './pages/Profile/Profile';
 import LikedImages from './pages/LikedImages/LikedImages';
 import './index.css';
+import Settings from './pages/Settings/Settings.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: 'download', element: <Download /> },
       { path: 'profile', element: <Profile /> },
       { path: 'likedImages', element: <LikedImages /> },
+      { path: 'settings', element: <Settings></Settings> },
     ],
   },
   { path: '/login', element: <Login /> },

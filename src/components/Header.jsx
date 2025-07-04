@@ -121,7 +121,9 @@ function Header() {
                   </NavLink>
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Settings
+                  <NavLink to="/settings">
+                    <span>Settings</span>
+                  </NavLink>
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
                   <button onClick={signOutUser}>Logout</button>
