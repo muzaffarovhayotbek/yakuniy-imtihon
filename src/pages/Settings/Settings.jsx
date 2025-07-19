@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
 import { CiUser } from "react-icons/ci";
 import { SiSpringsecurity } from "react-icons/si";
-import { MdSaveAlt } from "react-icons/md";
+import { auth } from '../../firebase/firabageConfig';
+import { useGlobalContext } from '../../context/GlobalContext'
+import { signOut } from 'firebase/auth';
 
+
+import { MdSaveAlt } from "react-icons/md";
+import { IoExitOutline } from "react-icons/io5";
+import toast from 'react-hot-toast';
 function Settings() {
   const [activeTab, setActiveTab] = useState('profile');
+  const { dispatch } = useGlobalContext();
+
+  const signOutUser = async () => {
+    try {
+      await signOut(auth);
+      dispatch({ type: 'LOGOUT' });
+      toast.success('See you soon');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className='container mx-auto px-4'>
       <h2 className='text-[40px] my-[24px] text-[#212529]'>Sozlamalar</h2>
 
       <div className='flex gap-8'>
-        {/* Chap menyu */}
         <div className='bg-red-700 w-[193px] flex-shrink-0 flex flex-col gap-2 p-4 rounded-md box-border'>
           <div className='flex items-center gap-2 cursor-pointer' onClick={() => setActiveTab('profile')}>
             <CiUser className='w-[16px] h-[16px]' />
@@ -30,9 +46,11 @@ function Settings() {
           <div className='cursor-pointer' onClick={() => setActiveTab('backup')}>
             <span className='text-[16px] text-[#0D6EFD]'>Zaxiralash</span>
           </div>
+          <div>
+            <button onClick={signOutUser} className='flex items-center gap-2 text-[16px] text-[#ffffffb3]'><IoExitOutline className='w-[16px] h-[16px]'></IoExitOutline> Tizimdan chiqish</button>
+          </div>
         </div>
 
-        {/* O'ng kontent */}
         <div className='flex-1 min-w-0 p-4 border rounded-md bg-white'>
           {activeTab === 'profile' && (
             <div>
