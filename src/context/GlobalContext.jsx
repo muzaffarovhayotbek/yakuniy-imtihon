@@ -1,10 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 export const GlobalContext = createContext();
 
 const dataFromLocalStorage = () => {
   try {
-    const savedData = JSON.parse(localStorage.getItem('my-splash-data'));
+    const savedData = JSON.parse(localStorage.getItem("my-splash-data"));
     return (
       savedData || {
         user: null,
@@ -14,22 +14,22 @@ const dataFromLocalStorage = () => {
       }
     );
   } catch (error) {
-    console.error('Error parsing localStorage data:', error);
+    console.error("Error parsing localStorage data:", error);
     return { user: null, authReady: false, likedImages: [], downloadImage: [] };
   }
 };
 
 const globalReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case "LOGIN":
       return { ...state, user: action.payload };
-    case 'AUTH_READY':
+    case "AUTH_READY":
       return { ...state, authReady: true };
-    case 'LOGOUT':
+    case "LOGOUT":
       return { ...state, user: null };
-    case 'LIKE':
+    case "LIKE":
       return { ...state, likedImages: [...state.likedImages, action.payload] };
-    case 'UNLIKE':
+    case "UNLIKE":
       return {
         ...state,
         likedImages: state.likedImages.filter(
@@ -45,7 +45,7 @@ export function GlobalContextProvider({ children }) {
   const [state, dispatch] = useReducer(globalReducer, dataFromLocalStorage());
 
   useEffect(() => {
-    localStorage.setItem('my-splash-data', JSON.stringify(state));
+    localStorage.setItem("my-splash-data", JSON.stringify(state));
   }, [state]);
 
   return (
@@ -59,7 +59,7 @@ export const useGlobalContext = () => {
   const context = useContext(GlobalContext);
   if (!context) {
     throw new Error(
-      'useGlobalContext must be used within a GlobalContextProvider'
+      "useGlobalContext must be used within a GlobalContextProvider"
     );
   }
   return context;
