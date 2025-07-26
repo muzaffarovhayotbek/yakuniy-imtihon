@@ -77,12 +77,15 @@ function Header() {
                 {likedImages.length}
               </span>
             )}
+              
           </NavLink>
 
+<div className='flex items-center pl-20'>
+    {user?.displayName || 'User'}
+</div>
           <div className="relative">
-            <div onClick={handleMenuToggle} className="cursor-pointer flex items-center gap-3 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800">
+            <div onClick={handleMenuToggle} className="cursor-pointer flex items-center p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800">
               <p className="text-base font-medium text-gray-800 dark:text-white">
-                {user?.displayName || 'User'}
               </p>
               <img
                 className="w-9 h-9 rounded-full object-cover border border-gray-300"
