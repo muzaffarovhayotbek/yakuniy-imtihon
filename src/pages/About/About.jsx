@@ -1,24 +1,25 @@
-import React from 'react';
-import profile from '../../assets/profile-DM-wpHcR.jpg';
+import React from "react";
+import profile from "../../assets/profile-DM-wpHcR.jpg";
+import me from "../../assets/me.jpg";
 function About() {
   return (
-    <div className='min-h-screen bg-base-100 py-12'>
+    <div className="min-h-screen bg-base-100 py-12">
       <div className="container mx-auto flex flex-col items-center">
         <h1 className="text-4xl font-bold mb-6 text-center">About Me</h1>
         <div className="avatar mb-8">
           <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
             <img
-              src={profile}
+              src={me}
               alt="Profile"
               className="w-32 h-32 rounded-full object-cover"
             />
           </div>
         </div>
         <p className="text-lg text-center max-w-2xl mb-4">
-          Hello! I'm Saminjonov Jamshid, a passionate web developer and designer
-          with a love for crafting intuitive and visually appealing user
-          experiences. With a strong background in front-end development and an
-          eye for design, I bring ideas to life through code.
+          Hello! I'm Muzaffarov Hayotbek, a passionate web developer and
+          designer with a love for crafting intuitive and visually appealing
+          user experiences. With a strong background in front-end development
+          and an eye for design, I bring ideas to life through code.
         </p>
         <p className="text-lg text-center max-w-2xl mb-4">
           Over the past few years, I've honed my skills in HTML, CSS,
